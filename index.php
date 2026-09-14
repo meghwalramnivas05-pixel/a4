@@ -105,7 +105,7 @@
         </div>
         <div style="position: relative;">
           <div style="border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-lg); border: 1px solid var(--color-border); background: #FFF;">
-            <img src="/assets/images/culinary_beet_root_prep_herbs.jpg" alt="Cranberryfare grand banquet feasting table" style="width: 100%; height: auto;">
+            <img src="/assets/images/artisan_pan_seared_dumpling_course.jpg" alt="Cranberryfare grand banquet feasting table" style="width: 100%; height: auto;">
           </div>
           <div style="position: absolute; bottom: -1rem; left: 1.5rem; background: #FFFFFF; border: 1px solid var(--color-border); padding: 0.85rem 1.4rem; border-radius: var(--radius-sm); box-shadow: var(--shadow-md); display: flex; align-items: center; gap: 0.8rem;">
             <span style="font-size: 1.3rem;">🍷</span>
@@ -170,7 +170,7 @@
         <div class="paid-product-card">
           <span class="paid-product-badge" style="background: #B83A1B;">Signature Antipasto</span>
           <div class="paid-product-img-wrap">
-            <img src="/assets/images/ambiance_fireplace_dining_lounge.jpg" alt="The Mercer Classic Pomodoro Bruschetta">
+            <img src="/assets/images/artisanal_cranberry_tart_pastry.jpg" alt="The Mercer Classic Pomodoro Bruschetta">
           </div>
           <div class="paid-product-body">
             <div class="paid-product-rating">★★★★★ <span>(284)</span></div>
@@ -191,7 +191,7 @@
         <div class="paid-product-card">
           <span class="paid-product-badge" style="background: #1C120C;">Pugliese Delicacy</span>
           <div class="paid-product-img-wrap">
-            <img src="/assets/images/anniversary_romantic_celebration_table.jpg" alt="The Stracciatella & Summer Truffle Tartine">
+            <img src="/assets/images/autumn_berry_harvest_basket.jpg" alt="The Stracciatella & Summer Truffle Tartine">
           </div>
           <div class="paid-product-body">
             <div class="paid-product-rating">★★★★★ <span>(412)</span></div>
@@ -212,7 +212,7 @@
         <div class="paid-product-card">
           <span class="paid-product-badge" style="background: #B83A1B;">Hearth Roasted</span>
           <div class="paid-product-img-wrap">
-            <img src="/assets/images/aged_wagyu_beef_entree.jpg" alt="The Wood-Fired Porcini & Sourdough Crust">
+            <img src="/assets/images/botanical_avocado_breakfast_crostini.jpg" alt="The Wood-Fired Porcini & Sourdough Crust">
           </div>
           <div class="paid-product-body">
             <div class="paid-product-rating">★★★★★ <span>(198)</span></div>
@@ -233,7 +233,7 @@
         <div class="paid-product-card">
           <span class="paid-product-badge" style="background: #1C120C;">Primi Piatti</span>
           <div class="paid-product-img-wrap">
-            <img src="/assets/images/candlelight_dining_hero_banner.jpg" alt="Handcrafted Tagliolini with Shaved White Truffle">
+            <img src="/assets/images/botanical_cranberry_cocktail_digestif.jpg" alt="Handcrafted Tagliolini with Shaved White Truffle">
           </div>
           <div class="paid-product-body">
             <div class="paid-product-rating">★★★★★ <span>(530)</span></div>
@@ -258,7 +258,7 @@
     <div class="container">
       <div style="display: grid; grid-template-columns: 1fr 1.15fr; gap: 4rem; align-items: center;">
         <div style="border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-md); border: 1px solid var(--color-border);">
-          <img src="/assets/images/brass_candelabra_linen_runners.jpg" alt="Blistered wood-fired artisan levain sourdough bread">
+          <img src="/assets/images/candlelit_brick_wall_bistro_lounge.jpg" alt="Blistered wood-fired artisan levain sourdough bread">
         </div>
         <div>
           <div class="section-subtitle">Gastronomic Anatomy &bull; Hearth Metallurgy</div>
@@ -361,7 +361,7 @@
           </div>
         </div>
         <div style="border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-md); border: 1px solid var(--color-border);">
-          <img src="/assets/images/bespoke_cocktail_botanical_bar.jpg" alt="Heirloom seasonal harvest salad platter">
+          <img src="/assets/images/fresh_garden_harvest_bowl.jpg" alt="Heirloom seasonal harvest salad platter">
         </div>
       </div>
     </div>
@@ -437,7 +437,7 @@
       <div class="grid-4">
         <div class="card">
           <div class="card-image-wrap">
-            <img src="/assets/images/chef_plating_microgreens_garnish.jpg" alt="The Candlelit Evening Ambiance">
+            <img src="/assets/images/fresh_picked_strawberries_basket.jpg" alt="The Candlelit Evening Ambiance">
             <span class="card-tag">Intimate Dining</span>
           </div>
           <div class="card-body">
@@ -447,7 +447,7 @@
         </div>
         <div class="card">
           <div class="card-image-wrap">
-            <img src="/assets/images/vintage_wine_pairing_glasses.jpg" alt="The Chef's Hearth Kitchen Pass">
+            <img src="/assets/images/fresh_wild_blueberries_compote_bowl.jpg" alt="The Chef's Hearth Kitchen Pass">
             <span class="card-tag">Chef's Pass</span>
           </div>
           <div class="card-body">
@@ -457,7 +457,7 @@
         </div>
         <div class="card">
           <div class="card-image-wrap">
-            <img src="/assets/images/crystal_stemware_cutlery_setting.jpg" alt="The Sommelier Cellar Vault">
+            <img src="/assets/images/fresh_wild_cranberries_harvest.jpg" alt="The Sommelier Cellar Vault">
             <span class="card-tag">Wine Vault</span>
           </div>
           <div class="card-body">
@@ -467,7 +467,7 @@
         </div>
         <div class="card">
           <div class="card-image-wrap">
-            <img src="/assets/images/heirloom_vegetable_veloute.jpg" alt="The Convivial Grand Banquet Hall">
+            <img src="/assets/images/glazed_cranberry_cheesecake_dessert.jpg" alt="The Convivial Grand Banquet Hall">
             <span class="card-tag">Communal Feast</span>
           </div>
           <div class="card-body">
@@ -484,7 +484,7 @@
     <div class="container">
       <div class="grid-2">
         <div style="border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-md); border: 1px solid var(--color-border);">
-          <img src="/assets/images/seared_scallops_caviar_starter.jpg" alt="Private dining alcove at 181 Mercer Street">
+          <img src="/assets/images/glazed_heirloom_berry_pastry.jpg" alt="Private dining alcove at 181 Mercer Street">
         </div>
         <div>
           <div class="section-subtitle">Manhattan Atelier &bull; Hospitality Heritage</div>
